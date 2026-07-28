@@ -1,17 +1,28 @@
-# nexora
+🚨 Nexora
 
-A new Flutter project.
+Smart Emergency & Accident Assistance App
 
-## Getting Started
+Nexora is a modern emergency assistance application designed to help users quickly request help during accidents or critical situations.
 
-This project is a starting point for a Flutter application.
+✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+* 🔐 Login & Registration
+* 🆘 SOS Emergency Alerts
+* 📍 Real-time Location Sharing
+* 👥 Emergency Contacts
+* 📋 Emergency History
+* 🤖 Future AI-based Accident Detection
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+🛠️ Tech Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Flutter • Dart • Firebase • GPS • Google Maps • AI/ML • GitHub
+
+🎯 Goal
+
+To build a fast, reliable, and intelligent emergency assistance platform that connects users with trusted contacts when help is needed most.
+
+🚧 Status
+
+Currently in development.
+
+Nexora — Help when it matters most.
