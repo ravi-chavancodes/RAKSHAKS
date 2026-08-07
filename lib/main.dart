@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/auth/auth_screen.dart';
 
 void main() {
   runApp(const NexoraApp());
@@ -18,7 +19,7 @@ class NexoraApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const NexoraHomePage(),
+      home: const AuthScreen(),
     );
   }
 }
