@@ -1,7 +1,3 @@
-Yes. For your RAKSHAK idea, I’d keep the README simple and understandable rather than making it look like a technical project report.
-
-Here’s a clean version you can directly put in README.md:
-
 🛡️ RAKSHAK
 
 Smart Emergency Response & Community Support System
