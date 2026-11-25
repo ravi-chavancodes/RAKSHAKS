@@ -1,66 +1,81 @@
-🛡️ RAKSHAK
+# RAKSHAK
 
-Smart Emergency Response & Community Support System
+Location-based emergency reporting and response coordination platform built with **Next.js 16** (App Router, strict TypeScript), **Tailwind CSS v4**, **shadcn/ui**, **Meta Astryx**, **Motion**, **MapLibre GL v5**, and **Supabase** (Postgres + PostGIS, Auth, Storage, Realtime, Edge Functions).
 
-RAKSHAK is a smart emergency assistance application designed to help people get the right help as quickly as possible during an emergency.
+> **Important:** RAKSHAK is a coordination aid, not a replacement for official emergency services (**112**, **108**, **101** in India).
 
-Instead of simply making an SOS call, RAKSHAK aims to understand the emergency, identify the type of help required, and connect the person with nearby suitable services or people.
+---
 
-🚨 What Makes RAKSHAK Different?
+## Architecture & Key Safeguards
 
-RAKSHAK supports two SOS modes:
+- **Non-blocking SOS Submission**: `POST /api/incidents` validates with Zod v4, enforces `client_request_id` idempotency, rate-limits to 10 requests per IP per 10 minutes, optionally stores 10-second audio in a private `incident-audio` bucket, and confirms `"Submitted"` only after database storage succeeds.
+- **Advisory AI (`RAKSHAK AI`)**: Post-submission triage runs asynchronously (`after()` / `analyze-incident` Edge Function) using NVIDIA NIM (`nvidia/nemotron-3.5-bolt-e4b`) without personal contact details and never overwrites the reporter's selected category.
+- **Strict Status Machine & Audit Trail**: All status transitions pass through `public.transition_case_status()` and are recorded in `public.status_history` and `public.audit_logs`. `"Assigned"` (notified) and `"Accepted"` (explicit responder ownership) are strictly separated.
+- **Row Level Security**: Enabled on every table (`profiles`, `incidents`, `responders`, `assignments`, `status_history`, `audit_logs`, `notifications`).
 
-* Self SOS – When you are facing an emergency yourself.
-* Third-Person SOS – When you see someone else who needs help.
+---
 
-It also handles different types of emergencies:
+## Repository Layout
 
-* 👤 Human Emergency
-* 🐾 Animal / Bird Emergency
-* 🚒 Rescue / Fire Emergency
+```text
+rakshak/
+├── .github/workflows/ci.yml   # Lint, Vitest, Next build, Playwright E2E
+├── docs/
+│   ├── TEST_REPORT.md         # Unit, E2E (TC-01..TC-06), and security verification
+│   └── screenshots/           # E2E verification captures
+├── supabase/
+│   ├── migrations/            # PostGIS schema, RLS, triggers, Realtime, Storage
+│   ├── functions/             # analyze-incident Edge Function
+│   ├── tests/                 # SQL RLS & status transition tests
+│   └── seed.sql               # Sample verified responders
+└── rakshak-web/               # Next.js 16 web application
+```
 
-🧠 Smart Emergency Analysis
+---
 
-RAKSHAK can analyze the information provided during an emergency and help determine:
+## Prerequisites
 
-What happened → What type of emergency is it → What help is needed → Who can respond nearby
+- **Node.js** 22+ and **npm** 10+
+- **Supabase** project (or Docker Desktop for local `supabase start`)
 
-The goal is to reduce confusion and save valuable time during critical situations.
+---
 
-📍 Nearby Help
+## Local Setup
 
-Based on the emergency type and location, RAKSHAK aims to connect the case with relevant nearby support such as:
+1. **Install dependencies**:
 
-* 🏥 Hospitals
-* 🚑 Ambulance / Medical Help
-* 🚒 Fire & Rescue Services
-* 👮 Emergency Authorities
-* 🤝 NGOs / Volunteers
-* 👨‍👩‍👧 Emergency Contacts
+   ```bash
+   cd rakshak-web
+   npm install
+   ```
 
-⚡ Key Features
+2. **Configure environment variables**:
 
-* Two SOS modes: Self SOS & Third-Person SOS
-* Three emergency categories
-* Smart emergency analysis
-* Location-based nearby help
-* Emergency contact notification
-* Fast emergency reporting
-* Community / volunteer support
-* Designed for quick response during critical situations
+   ```bash
+   cp .env.example .env.local
+   ```
 
-🎯 Our Goal
+   Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NVIDIA_API_KEY`, and `NVIDIA_MODEL` in `rakshak-web/.env.local`. Never commit `.env` or `.env.local`.
 
-The main goal of RAKSHAK is simple:
+3. **Run the development server**:
 
-Detect the emergency. Find the right help. Connect them as quickly as possible.
+   ```bash
+   npm run dev
+   ```
 
-RAKSHAK is designed to make emergency response faster, smarter, and more connected.
+   Open `http://localhost:3000`.
 
-⸻
+---
 
-🚀 Project
+## Verification & Tests
 
-RAKSHAK is a technology project focused on using AI, location services, and community-based assistance to improve emergency response.
+Run from `rakshak-web/`:
 
-Built with the vision of making help closer when every second matters.
+```bash
+npm run lint      # ESLint
+npm test          # Vitest unit tests (13 tests)
+npm run build     # TypeScript strict + Next.js production build
+npm run test:e2e  # Playwright E2E suite (TC-01 to TC-06)
+```
+
+See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for the full test and security checklist.

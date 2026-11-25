@@ -1,0 +1,24 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+!rakshak-web/.env.example
+
+# Dependencies & build outputs
+node_modules/
+rakshak-web/node_modules/
+rakshak-web/.next/
+rakshak-web/out/
+rakshak-web/build/
+rakshak-web/coverage/
+
+# Test artifacts
+rakshak-web/test-results/
+rakshak-web/playwright-report/
+
+# Supabase local temp
+supabase/.temp/
+
+# OS & editor
+.DS_Store
+Thumbs.db
