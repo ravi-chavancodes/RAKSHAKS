@@ -94,6 +94,41 @@ export const copy = {
       sentence:
         "Your location and optional audio stay private to your case and assigned responders. RAKSHAK is a coordination aid, not a replacement for official emergency services.",
     },
+    story: {
+      scrollPrompt: "Scroll to see how it works",
+      skipLabel: "Skip Story",
+      captions: [
+        {
+          id: 1,
+          minProgress: 0.15,
+          maxProgress: 0.43,
+          kicker: "01 · Accident Strikes",
+          text: "An unexpected collision leaves a pedestrian injured at the crossing.",
+        },
+        {
+          id: 2,
+          minProgress: 0.44,
+          maxProgress: 0.72,
+          kicker: "02 · Help via RAKSHAK",
+          text: "A bystander opens RAKSHAK, captures the scene, and shares live GPS.",
+        },
+        {
+          id: 3,
+          minProgress: 0.73,
+          maxProgress: 0.92,
+          kicker: "03 · Timely Rescue",
+          text: "Verified responders accept and an ambulance reaches in time.",
+        },
+      ],
+      finale: {
+        badge: "Responder Accepted · On Site",
+        heading: "Send an SOS report from any browser.",
+        subline:
+          "Your case is marked Submitted only after our server saves it. In an emergency, dial 112, 108, or 101 directly.",
+        primaryCta: "Report an emergency",
+        secondaryCta: "How it works",
+      },
+    },
   },
   homeSections: {
     sosEntryHeading: "Need emergency coordination?",

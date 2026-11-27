@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Golos_Text, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/shell/navbar";
 import { Footer } from "@/components/shell/footer";
 import { copy } from "@/lib/copy";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const golosText = Golos_Text({
+  variable: "--font-golos-text",
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,6 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: `${copy.brand.name} — ${copy.brand.tagline}`,
   description: copy.brand.disclaimer,
+  icons: {
+    icon: "/images/rakshak-mark.png",
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${golosText.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-canvas text-strong">
         <Providers>

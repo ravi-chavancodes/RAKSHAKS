@@ -1,6 +1,6 @@
 # RAKSHAK
 
-Location-based emergency reporting and response coordination platform built with **Next.js 16** (App Router, strict TypeScript), **Tailwind CSS v4**, **shadcn/ui**, **Meta Astryx**, **Motion**, **MapLibre GL v5**, and **Supabase** (Postgres + PostGIS, Auth, Storage, Realtime, Edge Functions).
+Location-based emergency reporting and response coordination platform built with **Next.js 16** (App Router, strict TypeScript), **Tailwind CSS v4**, **shadcn/ui**, **Motion**, **MapLibre GL v5**, and **Supabase** (Postgres + PostGIS, Auth, Storage, Realtime, Edge Functions).
 
 > **Important:** RAKSHAK is a coordination aid, not a replacement for official emergency services (**112**, **108**, **101** in India).
 
@@ -9,7 +9,7 @@ Location-based emergency reporting and response coordination platform built with
 ## Architecture & Key Safeguards
 
 - **Non-blocking SOS Submission**: `POST /api/incidents` validates with Zod v4, enforces `client_request_id` idempotency, rate-limits to 10 requests per IP per 10 minutes, optionally stores 10-second audio in a private `incident-audio` bucket, and confirms `"Submitted"` only after database storage succeeds.
-- **Advisory AI (`RAKSHAK AI`)**: Post-submission triage runs asynchronously (`after()` / `analyze-incident` Edge Function) using NVIDIA NIM (`nvidia/nemotron-3.5-bolt-e4b`) without personal contact details and never overwrites the reporter's selected category.
+- **Advisory AI (`RAKSHAK AI`)**: Post-submission triage runs asynchronously (`after()` / `analyze-incident` Edge Function) without personal contact details and never overwrites the reporter's selected category.
 - **Strict Status Machine & Audit Trail**: All status transitions pass through `public.transition_case_status()` and are recorded in `public.status_history` and `public.audit_logs`. `"Assigned"` (notified) and `"Accepted"` (explicit responder ownership) are strictly separated.
 - **Row Level Security**: Enabled on every table (`profiles`, `incidents`, `responders`, `assignments`, `status_history`, `audit_logs`, `notifications`).
 
@@ -20,9 +20,7 @@ Location-based emergency reporting and response coordination platform built with
 ```text
 rakshak/
 ├── .github/workflows/ci.yml   # Lint, Vitest, Next build, Playwright E2E
-├── docs/
-│   ├── TEST_REPORT.md         # Unit, E2E (TC-01..TC-06), and security verification
-│   └── screenshots/           # E2E verification captures
+├── CHANGELOG.md               # Platform release history
 ├── supabase/
 │   ├── migrations/            # PostGIS schema, RLS, triggers, Realtime, Storage
 │   ├── functions/             # analyze-incident Edge Function
@@ -73,9 +71,7 @@ Run from `rakshak-web/`:
 
 ```bash
 npm run lint      # ESLint
-npm test          # Vitest unit tests (13 tests)
+npm test          # Vitest unit tests
 npm run build     # TypeScript strict + Next.js production build
-npm run test:e2e  # Playwright E2E suite (TC-01 to TC-06)
+npm run test:e2e  # Playwright E2E suite (TC-01 to TC-06 + mobile checks)
 ```
-
-See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for the full test and security checklist.

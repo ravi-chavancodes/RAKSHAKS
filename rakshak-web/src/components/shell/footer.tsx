@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { copy } from "@/lib/copy";
@@ -7,9 +8,18 @@ export function Footer() {
     <footer className="mt-auto w-full border-t border-border-default bg-surface">
       <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6 px-4 py-8 sm:px-6">
         <div className="flex flex-wrap items-center gap-6">
-          <span className="text-caption font-semibold text-strong">
-            {copy.brand.name}
-          </span>
+          <Link href="/" className="inline-flex items-center gap-2">
+            <Image
+              src="/images/rakshak-mark.png"
+              alt=""
+              width={24}
+              height={26}
+              className="h-6 w-auto object-contain"
+            />
+            <span className="font-heading text-caption font-bold tracking-tight text-strong">
+              {copy.brand.name}
+            </span>
+          </Link>
           <nav aria-label="Footer navigation" className="flex items-center gap-5">
             <Link
               href="/privacy"

@@ -19,6 +19,9 @@ rakshak-web/playwright-report/
 # Supabase local temp
 supabase/.temp/
 
+# Local backups
+backups/
+
 # OS & editor
 .DS_Store
 Thumbs.db
